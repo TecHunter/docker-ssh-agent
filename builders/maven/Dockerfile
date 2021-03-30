@@ -1,4 +1,4 @@
-FROM techunter/jenkins-graalvm-ssh-agent:jdk11
+FROM techunter/jenkins-graalvm-agent:jdk11
 
 ARG MAVEN_VERSION=3.6.3
 ARG USER_HOME_DIR=$JENKINS_AGENT_HOME
