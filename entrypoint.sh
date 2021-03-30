@@ -40,7 +40,8 @@ write_key() {
   mkdir -p "${JENKINS_AGENT_HOME}/.ssh"
   echo "$1" > "${JENKINS_AGENT_HOME}/.ssh/authorized_keys"
   chown -Rf "${ID_GROUP}" "${JENKINS_AGENT_HOME}/.ssh"
-  chmod 0700 -R "${JENKINS_AGENT_HOME}/.ssh"
+  chmod 0600 "${JENKINS_AGENT_HOME}/.ssh/authorized_keys"
+  chmod 0700 "${JENKINS_AGENT_HOME}/.ssh"
 }
 
 if [[ ${JENKINS_AGENT_SSH_PUBKEY} == ssh-* ]]; then
@@ -51,7 +52,7 @@ if [[ ${JENKINS_SLAVE_SSH_PUBKEY} == ssh-* ]]; then
 fi
 
 # ensure variables passed to docker container are also exposed to ssh sessions
-env | grep _ >> /etc/environment
+#env | grep _ >> /etc/environment
 
 if [[ $# -gt 0 ]]; then
   echo "${0##*/} params: $@"
