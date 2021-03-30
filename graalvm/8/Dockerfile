@@ -33,7 +33,8 @@ ENV SSHD_PORT=22
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 
 RUN groupadd -g ${gid} ${group} \
-    && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
+    && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"\
+    && mkdir -p /startup
 
 # setup SSH server
 RUN microdnf install openssh-server\

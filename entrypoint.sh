@@ -78,6 +78,6 @@ fi
 # generate host keys if not present
 ssh-keygen -A
 sed -i /etc/ssh/sshd_config -e "s/#Port 22.*/Port ${SSHD_PORT=22}/"
-
+for f in /startup/*.sh ; do [ -x "$f" ] && [ ! -d "$f" ] && "$f" ; done
 # do not detach (-D), log to stderr (-e), passthrough other arguments
 exec /usr/sbin/sshd -D -e "${@}"
