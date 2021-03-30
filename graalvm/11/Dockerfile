@@ -20,8 +20,7 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-FROM openjdk:11-jdk-stretch
-LABEL MAINTAINER="Nicolas De Loof <nicolas.deloof@gmail.com>"
+FROM ghcr.io/graalvm/graalvm-ce:java11-21.0.0.2
 
 ARG user=jenkins
 ARG group=jenkins
@@ -29,6 +28,7 @@ ARG uid=1000
 ARG gid=1000
 ARG JENKINS_AGENT_HOME=/home/${user}
 
+ENV SSHD_PORT=22
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 
 RUN groupadd -g ${gid} ${group} \
@@ -49,8 +49,6 @@ RUN sed -i /etc/ssh/sshd_config \
 VOLUME "${JENKINS_AGENT_HOME}" "/tmp" "/run" "/var/run"
 WORKDIR "${JENKINS_AGENT_HOME}"
 
-COPY setup-sshd /usr/local/bin/setup-sshd
-
-EXPOSE 22
+COPY ../../setup-sshd /usr/local/bin/setup-sshd
 
 ENTRYPOINT ["setup-sshd"]
