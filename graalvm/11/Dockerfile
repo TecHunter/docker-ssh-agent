@@ -35,8 +35,8 @@ RUN groupadd -g ${gid} ${group} \
     && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}"
 
 # setup SSH server
-RUN yum install -y openssh-server\
-    && rm -rf /var/cache/yum
+RUN microdnf install openssh-server\
+    && microdnf clean
 
 RUN sed -i /etc/ssh/sshd_config \
         -e 's/#PermitRootLogin.*/PermitRootLogin no/' \
