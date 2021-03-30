@@ -51,5 +51,4 @@ WORKDIR "${JENKINS_AGENT_HOME}"
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 
-USER 1000
 ENTRYPOINT ["entrypoint.sh"]
