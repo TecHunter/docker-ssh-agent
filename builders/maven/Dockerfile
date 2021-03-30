@@ -17,6 +17,3 @@ ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 
 ADD 99maven-start.sh /startup/
 ADD settings-docker.xml /usr/share/maven/ref/
-
-ENTRYPOINT ["/usr/local/bin/mvn-entrypoint.sh"]
-CMD ["mvn"]

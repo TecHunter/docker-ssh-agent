@@ -37,7 +37,7 @@ RUN groupadd -g ${gid} ${group} \
     && mkdir -p /startup
 
 # setup SSH server
-RUN microdnf install openssh-server\
+RUN microdnf install openssh-server git\
     && microdnf clean all
 
 RUN sed -i /etc/ssh/sshd_config \
