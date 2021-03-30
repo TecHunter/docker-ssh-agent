@@ -9,8 +9,8 @@ clean:
 
 prepare:
 	mkdir -p .build
-	cp -f setup-sshd .build
-	chmod +x .build/setup-sshd
+	cp -f entrypoint.sh .build
+	chmod +x .build/entrypoint.sh
 
 build-jdk8:
 	cp -f graalvm/8/* .build/
