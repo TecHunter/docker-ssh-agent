@@ -8,3 +8,4 @@ bats-core/
 /.vscode/
 /*/**/setup-sshd
 .idea/
+.build/
