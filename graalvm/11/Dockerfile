@@ -36,7 +36,7 @@ RUN groupadd -g ${gid} ${group} \
 
 # setup SSH server
 RUN microdnf install openssh-server\
-    && microdnf clean
+    && microdnf clean all
 
 RUN sed -i /etc/ssh/sshd_config \
         -e 's/#PermitRootLogin.*/PermitRootLogin no/' \
