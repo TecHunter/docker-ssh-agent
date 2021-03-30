@@ -43,6 +43,6 @@ copy_reference_files() {
 owd="$(pwd)"
 copy_reference_files
 unset MAVEN_CONFIG
-
+alias mvn="/home/jenkins/maven/bin/mvn"
 cd "${owd}"
 unset owd
