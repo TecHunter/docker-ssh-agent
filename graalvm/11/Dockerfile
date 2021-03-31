@@ -40,11 +40,12 @@ RUN microdnf install openssh-server git\
     && microdnf clean all
 
 RUN sed -i /etc/ssh/sshd_config \
-        -e 's/#PermitRootLogin.*/PermitRootLogin no/' \
-        -e 's/#RSAAuthentication.*/RSAAuthentication yes/'  \
-        -e 's/#PasswordAuthentication.*/PasswordAuthentication no/' \
-        -e 's/#SyslogFacility.*/SyslogFacility AUTH/' \
-        -e 's/#LogLevel.*/LogLevel INFO/' && \
+        -e 's/#?PermitRootLogin.*/PermitRootLogin no/' \
+        -e 's/#?RSAAuthentication.*/RSAAuthentication yes/'  \
+        -e 's/#?PasswordAuthentication.*/PasswordAuthentication no/' \
+        -e 's/#?PubkeyAuthentication.*/PubkeyAuthentication yes/' \
+        -e 's/#?SyslogFacility.*/SyslogFacility AUTH/' \
+        -e 's/#?LogLevel.*/LogLevel INFO/' && \
     mkdir /var/run/sshd
 VOLUME "${JENKINS_AGENT_HOME}" "/tmp" "/run" "/var/run"
 WORKDIR "${JENKINS_AGENT_HOME}"
