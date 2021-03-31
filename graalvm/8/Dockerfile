@@ -35,8 +35,8 @@ ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 RUN groupadd -g ${gid} ${group} \
     && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}" \
     && mkdir -p /startup && chmod 777 /startup -R \
-    && mkdir -p /${JENKINS_AGENT_HOME}/bin && chmod 777 /${JENKINS_AGENT_HOME}/bin -R
-ENV PATH /${JENKINS_AGENT_HOME}/bin:$PATH
+    && mkdir -p ${JENKINS_AGENT_HOME}/bin && chmod 777 ${JENKINS_AGENT_HOME}/bin -R
+ENV PATH ${JENKINS_AGENT_HOME}/bin:$PATH
 
 # setup SSH server
 RUN microdnf install openssh-server git\
