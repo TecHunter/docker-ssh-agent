@@ -43,6 +43,11 @@ copy_reference_files() {
 owd="$(pwd)"
 copy_reference_files
 unset MAVEN_CONFIG
-
+if [ -L ${BIN_DIR}/bin/mvn ] && [ -e ${BIN_DIR}/bin/mvn ] ; then
+   echo "Maven linked"
+else
+   rm -f ${BIN_DIR}/bin/mvn || echo 0
+   ln -s /home/jenkins/maven/bin/mvn ${BIN_DIR}/bin/mvn
+fi
 cd "${owd}"
 unset owd
