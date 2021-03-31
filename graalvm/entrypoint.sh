@@ -28,7 +28,7 @@ set -ex
 #  docker run jenkins/ssh-agent <public key>
 # or
 #  docker run -e "JENKINS_AGENT_SSH_PUBKEY=<public key>" jenkins/ssh-agent
-
+export USER_HOME=/home/jenkins
 write_key() {
   local ID_GROUP
 
@@ -37,11 +37,11 @@ write_key() {
   # ID_GROUP contains the user:group of JENKINS_AGENT_HOME directory
   ID_GROUP="${PUID}:${PGID}"
 
-  mkdir -p "${JENKINS_AGENT_HOME}/.ssh"
-  echo "$1" > "${JENKINS_AGENT_HOME}/.ssh/authorized_keys"
-  chown -Rf "${ID_GROUP}" "${JENKINS_AGENT_HOME}/.ssh"
-  chmod 0600 "${JENKINS_AGENT_HOME}/.ssh/authorized_keys"
-  chmod 0700 "${JENKINS_AGENT_HOME}/.ssh"
+  mkdir -p "${USER_HOME}/.ssh"
+  echo "$1" > "${USER_HOME}/.ssh/authorized_keys"
+  chown -Rf "${ID_GROUP}" "${USER_HOME}/.ssh"
+  chmod 0600 "${USER_HOME}/.ssh/authorized_keys"
+  chmod 0700 "${USER_HOME}/.ssh"
 }
 
 if [[ ${JENKINS_AGENT_SSH_PUBKEY} == ssh-* ]]; then
@@ -52,7 +52,7 @@ if [[ ${JENKINS_SLAVE_SSH_PUBKEY} == ssh-* ]]; then
 fi
 
 # ensure variables passed to docker container are also exposed to ssh sessions
-#env | grep _ >> /etc/environment
+env | grep _ >> /etc/environment
 
 if [[ $# -gt 0 ]]; then
   echo "${0##*/} params: $@"
@@ -75,7 +75,7 @@ if [[ $# -gt 0 ]]; then
     exec "$@"
   fi
 fi
-export PATH=$PATH:/home/jenkins/bin
+export PATH=$PATH:${USER_HOME}/bin
 # generate host keys if not present
 ssh-keygen -A
 sed -i /etc/ssh/sshd_config -e "s/#Port 22.*/Port ${SSHD_PORT=22}/"
