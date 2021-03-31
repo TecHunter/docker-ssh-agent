@@ -10,15 +10,14 @@ clean:
 prepare:
 	rm -Rf .build/
 	mkdir -p .build
-
-build-jdk8:
+	cp -f graalvm/*.sh .build/
 	cp -f builders/maven/* .build/
 	chmod +x .build/*.sh
+
+build-jdk8:
 	sed -e 's|#DOCKER_IMAGE#|ghcr.io/graalvm/graalvm-ce:java8-21.0.0.2|' graalvm/Dockerfile > .build/Dockerfile
 	docker build -t ${IMAGE_NAME}:jdk8 .build
 
 build-jdk11:
-	cp -f builders/maven/* .build/
-	chmod +x .build/*.sh
 	sed -e 's|#DOCKER_IMAGE#|ghcr.io/graalvm/graalvm-ce:java11-21.0.0.2|' graalvm/Dockerfile > .build/Dockerfile
 	docker build -t ${IMAGE_NAME}:jdk11 .build
