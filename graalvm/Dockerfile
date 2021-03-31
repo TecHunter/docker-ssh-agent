@@ -51,4 +51,3 @@ ADD settings-docker.xml ${JENKINS_HOME}/maven/ref/
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
-USER jenkins
