@@ -1,5 +1,8 @@
 #! /bin/sh -eu
 
+export JENKINS_HOME=/home/jenkins
+export BIN_DIR=/home/jenkins/bin
+
 if [ -L ${BIN_DIR}/bin/mvn ] && [ -e ${BIN_DIR}/bin/mvn ] ; then
    echo "Maven linked"
 else
