@@ -13,11 +13,13 @@ prepare:
 	chmod +x .build/entrypoint.sh
 
 build-jdk8:
-	cp -f graalvm/8/* .build/
+	cp -f graalvm/* .build/
+	sed -i .build/Dockerfile -e 's|#DOCKER_IMAGE#|ghcr.io/graalvm/graalvm-ce:java8-21.0.0.2|'
 	docker build -t ${IMAGE_NAME}:jdk8 .build
 
 build-jdk11:
-	cp -f graalvm/11/* .build/
+	cp -f graalvm/* .build/
+	sed -i .build/Dockerfile -e 's|#DOCKER_IMAGE#|ghcr.io/graalvm/graalvm-ce:java11-21.0.0.2|'
 	docker build -t ${IMAGE_NAME}:jdk11 .build
 
 build-maven-jdk11:

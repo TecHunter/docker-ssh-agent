@@ -20,8 +20,7 @@
 #  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 #  THE SOFTWARE.
 
-FROM ghcr.io/graalvm/graalvm-ce:java8-21.0.0.2
-
+FROM #DOCKER_IMAGE#
 
 ARG user=jenkins
 ARG group=jenkins
@@ -31,13 +30,13 @@ ARG JENKINS_AGENT_HOME=/home/${user}
 
 ENV SSHD_PORT=22
 ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
+ENV BIN_DIR ${JENKINS_AGENT_HOME}/bin
 
 RUN groupadd -g ${gid} ${group} \
     && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}" \
     && mkdir -p /startup && chmod 777 /startup -R \
-    && mkdir -p ${JENKINS_AGENT_HOME}/bin && chmod 777 ${JENKINS_AGENT_HOME}/bin -R
-ENV PATH ${JENKINS_AGENT_HOME}/bin:$PATH
-
+    && mkdir -p ${BIN_DIR} && chmod 777 ${BIN_DIR} -R
+ENV PATH ${BIN_DIR}:$PATH
 # setup SSH server
 RUN microdnf install openssh-server git\
     && microdnf clean all
