@@ -75,7 +75,7 @@ if [[ $# -gt 0 ]]; then
     exec "$@"
   fi
 fi
-
+export PATH=$PATH:/home/jenkins/bin
 # generate host keys if not present
 ssh-keygen -A
 sed -i /etc/ssh/sshd_config -e "s/#Port 22.*/Port ${SSHD_PORT=22}/"

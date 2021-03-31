@@ -34,7 +34,8 @@ ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
 
 RUN groupadd -g ${gid} ${group} \
     && useradd -d "${JENKINS_AGENT_HOME}" -u "${uid}" -g "${gid}" -m -s /bin/bash "${user}" \
-    && mkdir -p /startup && chmod 777 /startup -R
+    && mkdir -p /startup && chmod 777 /startup -R \
+    && mkdir -p /{JENKINS_AGENT_HOME}/bin && chmod 777 /${JENKINS_AGENT_HOME}/bin -R
 
 # setup SSH server
 RUN microdnf install openssh-server git\
@@ -50,10 +51,9 @@ RUN sed -i /etc/ssh/sshd_config \
         -e 's/#\{0,1\}SyslogFacility.*/SyslogFacility AUTH/' \
         -e 's/#\{0,1\}LogLevel.*/LogLevel INFO/' && \
     mkdir /var/run/sshd
-
 VOLUME "${JENKINS_AGENT_HOME}" "/tmp" "/run" "/var/run"
 WORKDIR "${JENKINS_AGENT_HOME}"
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-USER 1000
+
 ENTRYPOINT ["entrypoint.sh"]

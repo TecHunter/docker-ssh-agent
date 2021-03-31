@@ -9,7 +9,8 @@ RUN mkdir -p /${USER_HOME_DIR}/maven/ref \
   && curl -fsSL -o /tmp/apache-maven.tar.gz ${BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
   && echo "${SHA}  /tmp/apache-maven.tar.gz" | sha512sum -c - \
   && tar -xzf /tmp/apache-maven.tar.gz -C /${USER_HOME_DIR}/maven --strip-components=1 \
-  && rm -f /tmp/apache-maven.tar.gz
+  && rm -f /tmp/apache-maven.tar.gz \
+  && ln -s /home/jenkins/maven/bin/mvn /${USER_HOME_DIR}/bin/mvn
 
 ENV MAVEN_HOME /$USER_HOME_DIR/maven
 ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
