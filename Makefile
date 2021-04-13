@@ -15,9 +15,11 @@ prepare:
 	chmod +x .build/*.sh
 
 build-jdk8:
-	sed -e 's|#DOCKER_IMAGE#|ghcr.io/graalvm/graalvm-ce:java8-21.0.0.2|' graalvm/Dockerfile > .build/Dockerfile
+	#sed -e 's|#DOCKER_IMAGE#|ghcr.io/graalvm/graalvm-ce:java8-21.0.0.2|' graalvm/Dockerfile > .build/Dockerfile
+	cp graalvm/Dockerfile .build/Dockerfile-jdk8
 	docker build -t ${IMAGE_NAME}:jdk8 .build
 
 build-jdk11:
-	sed -e 's|#DOCKER_IMAGE#|ghcr.io/graalvm/graalvm-ce:java11-21.0.0.2|' graalvm/Dockerfile > .build/Dockerfile
+	#sed -e 's|#DOCKER_IMAGE#|ghcr.io/graalvm/graalvm-ce:java11-21.0.0.2|' graalvm/Dockerfile > .build/Dockerfile
+	cp graalvm/Dockerfile .build/Dockerfile
 	docker build -t ${IMAGE_NAME}:jdk11 .build
