@@ -20,14 +20,14 @@ RUN microdnf install openssh-server git\
     && microdnf clean all
 
 RUN sed -i /etc/ssh/sshd_config \
-        -e 's/#\{0,1\}PermitRootLogin.*/PermitRootLogin yes/' \
-        -e 's/#\{0,1\}RSAAuthentication.*/RSAAuthentication yes/'  \
-        -e 's/#\{0,1\}PasswordAuthentication.*/PasswordAuthentication no/' \
-        -e 's/#\{0,1\}PubkeyAuthentication.*/PubkeyAuthentication yes/' \
-        -e 's/#\{0,1\}GSSAPIAuthentication.*/GSSAPIAuthentication no/' \
-        -e 's/#\{0,1\}GSSAPIKeyExchange.*/GSSAPIKeyExchange no/' \
-        -e 's/#\{0,1\}SyslogFacility.*/SyslogFacility AUTH/' \
-        -e 's/#\{0,1\}LogLevel.*/LogLevel INFO/' && \
+    -e 's/#\{0,1\}PermitRootLogin.*/PermitRootLogin yes/' \
+    -e 's/#\{0,1\}RSAAuthentication.*/RSAAuthentication yes/'  \
+    -e 's/#\{0,1\}PasswordAuthentication.*/PasswordAuthentication no/' \
+    -e 's/#\{0,1\}PubkeyAuthentication.*/PubkeyAuthentication yes/' \
+    -e 's/#\{0,1\}GSSAPIAuthentication.*/GSSAPIAuthentication no/' \
+    -e 's/#\{0,1\}GSSAPIKeyExchange.*/GSSAPIKeyExchange no/' \
+    -e 's/#\{0,1\}SyslogFacility.*/SyslogFacility AUTH/' \
+    -e 's/#\{0,1\}LogLevel.*/LogLevel INFO/' && \
     mkdir /var/run/sshd
 VOLUME "${JENKINS_AGENT_HOME}"
 WORKDIR "${JENKINS_AGENT_HOME}"
@@ -37,17 +37,17 @@ ARG SHA=c35a1803a6e70a126e80b2b3ae33eed961f83ed74d18fcd16909b2d44d7dada3203f1ffe
 ARG BASE_URL=https://apache.osuosl.org/maven/maven-3/${MAVEN_VERSION}/binaries
 
 RUN mkdir -p ${JENKINS_HOME}/maven/ref \
-  && curl -fsSL -o /tmp/apache-maven.tar.gz ${BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
-  && echo "${SHA}  /tmp/apache-maven.tar.gz" | sha512sum -c - \
-  && tar -xzf /tmp/apache-maven.tar.gz -C ${JENKINS_HOME}/maven --strip-components=1 \
-  && rm -f /tmp/apache-maven.tar.gz \
-  && ln -s ${JENKINS_HOME}/maven/bin/mvn ${BIN_DIR}/mvn
+    && curl -fsSL -o /tmp/apache-maven.tar.gz ${BASE_URL}/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+    && echo "${SHA}  /tmp/apache-maven.tar.gz" | sha512sum -c - \
+    && tar -xzf /tmp/apache-maven.tar.gz -C ${JENKINS_HOME}/maven --strip-components=1 \
+    && rm -f /tmp/apache-maven.tar.gz \
+    && ln -s ${JENKINS_HOME}/maven/bin/mvn ${BIN_DIR}/mvn
 
 ENV MAVEN_HOME ${JENKINS_HOME}/maven
 ENV MAVEN_CONFIG ${JENKINS_HOME}/.m2
 
-ADD 99maven-start.sh /startup/
-ADD settings-docker.xml ${JENKINS_HOME}/maven/ref/
+ADD builders/maven/99maven-start.sh /startup/
+ADD builders/maven/settings-docker.xml ${JENKINS_HOME}/maven/ref/
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY graalvm/entrypoint.sh /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]

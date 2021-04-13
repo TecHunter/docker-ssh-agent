@@ -11,7 +11,7 @@ prepare:
 	rm -Rf .build/
 	mkdir -p .build
 	cp -f graalvm/*.sh .build/
-	cp -f builders/maven/* .build/
+	cp -f builders .build/
 	chmod +x .build/*.sh
 
 build-jdk8:
