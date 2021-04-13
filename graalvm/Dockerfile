@@ -50,4 +50,5 @@ ADD builders/maven/99maven-start.sh /startup/
 ADD builders/maven/settings-docker.xml ${JENKINS_HOME}/maven/ref/
 
 COPY graalvm/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
